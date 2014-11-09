@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Wall -Werror
 LDFLAGS=-ldl
 SO_LFLAGS=-shared -fvisibility=hidden -fvisibility-inlines-hidden -Wl -s
-APP_OBJ=main.o ias.so
+APP_OBJ=app.o ias.so
 
 APP=app
 
