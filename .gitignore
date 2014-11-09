@@ -1,0 +1,6 @@
+app
+*.o
+*.objdump
+*.so
+tags
+
