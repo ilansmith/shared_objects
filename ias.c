@@ -10,12 +10,12 @@ static int speak(char *greeting, char *subject)
 	return 0;
 }
 
-int hello(char *subject)
+int ias_hello(char *subject)
 {
 	return speak("hello", subject);
 }
 
-int goodbye(char *subject)
+int ias_goodbye(char *subject)
 {
 	return speak("goodbye", subject);
 }

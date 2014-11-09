@@ -35,10 +35,10 @@ static int load_ias(void **handle)
 	if (!(*handle = dlopen(so_file, RTLD_LAZY)))
 		return -1;
 
-	if (!(hello = (func_hello_t)dlsym(*handle, "hello")))
+	if (!(hello = (func_hello_t)dlsym(*handle, "ias_hello")))
 		goto Exit;
 
-	if (!(goodbye = (func_goodbye_t)dlsym(*handle, "goodbye")))
+	if (!(goodbye = (func_goodbye_t)dlsym(*handle, "ias_goodbye")))
 		goto Exit;
 
 	ret_val = 0;

@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Werror
+CFLAGS=-Wall -Werror -fPIC
 LDFLAGS=-ldl
 SO_LFLAGS=-shared -fvisibility=hidden -fvisibility-inlines-hidden -s
 APP_OBJ=app.o ias.so
@@ -19,7 +19,7 @@ all: $(APP)
 	$(CC) $(SO_LFLAGS) $^ -o $@
 
 $(APP): $(APP_OBJ)
-	$(CC) $(LDFLAGS) $(filter %.o, $^) -o $@
+	$(CC) -o $@ $(filter %.o, $^) $(LDFLAGS)
 
 clean:
 	rm -rf *.o

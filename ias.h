@@ -7,8 +7,8 @@ extern "C" {
 
 #define IAS_API __attribute__ ((visibility ("default"))) 
 
-IAS_API int hello(char *subject);
-IAS_API int goodbye(char *subject);
+IAS_API int ias_hello(char *subject);
+IAS_API int ias_goodbye(char *subject);
 
 #ifdef __cplusplus
 }
