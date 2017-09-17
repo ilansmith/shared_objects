@@ -62,6 +62,7 @@ Exit:
 static int test(void)
 {
 	void *handle;
+	int ret = -1;
 
 	if (load_ias(&handle)) {
 		printf("Error: %s\n", dlerror());
@@ -70,27 +71,30 @@ static int test(void)
 
 	if (hello("world")) {
 		printf("Error: hello()\n");
-		return -1;
+		goto exit;
 	}
 
 	if (goodbye("world")) {
 		printf("Error: goodbye()\n");
-		return -1;
+		goto exit;
 	}
 
 	if (hidden) {
 		printf("Error: ias_hidden() should not be exported\n");
-		return -1;
+		goto exit;
 	} else {
 		printf("ias_hidden() is not exported\n");
 	}
 
+	ret = 0;
+
+exit:
 	if (unload_ias(handle)) {
 		printf("Error: unload()\n");
-		return -1;
+		ret = -1;
 	}
 
-	return 0;
+	return ret;
 }
 
 int main(int argc, char *argv[])
