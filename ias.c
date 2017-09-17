@@ -20,3 +20,8 @@ int ias_goodbye(char *subject)
 	return speak("goodbye", subject);
 }
 
+int ias_hidden(void)
+{
+	return speak("hidden", "you should never see this");
+}
+

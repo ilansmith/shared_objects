@@ -1,7 +1,7 @@
 CC=gcc
-CFLAGS=-Wall -Werror -fPIC
+CFLAGS=-Wall -Werror -fvisibility=hidden -s -fPIC
 LDFLAGS=-ldl
-SO_LFLAGS=-shared -fvisibility=hidden -fvisibility-inlines-hidden -s
+SO_LFLAGS=-shared
 APP_OBJ=app.o ias.so
 
 APP=app
@@ -16,6 +16,8 @@ all: $(APP)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 %.so: %.o
+	$(foreach obj,$^, \
+		$(shell objcopy --localize-hidden --strip-unneeded $(obj)))
 	$(CC) $(SO_LFLAGS) $^ -o $@
 
 $(APP): $(APP_OBJ)

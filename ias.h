@@ -9,6 +9,7 @@ extern "C" {
 
 IAS_API int ias_hello(char *subject);
 IAS_API int ias_goodbye(char *subject);
+int ias_hidden(void);
 
 #ifdef __cplusplus
 }

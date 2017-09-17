@@ -8,14 +8,17 @@
 
 typedef int (*func_hello_t)(char *subject);
 typedef int (*func_goodbye_t)(char *subject);
+typedef int (*func_hidden_t)(void);
 
 static func_hello_t hello;
 static func_goodbye_t goodbye;
+static func_hidden_t hidden;
 
 static int unload_ias(void *handle)
 {
 	hello = NULL;
 	goodbye = NULL;
+	hidden = NULL;
 
 	return dlclose(handle);
 }
@@ -35,11 +38,17 @@ static int load_ias(void **handle)
 	if (!(*handle = dlopen(so_file, RTLD_LAZY)))
 		return -1;
 
-	if (!(hello = (func_hello_t)dlsym(*handle, "ias_hello")))
+	if (!(hello = (func_hello_t)dlsym(*handle, "ias_hello"))) {
+		printf("failed to load ias_hello()\n");
 		goto Exit;
+	}
 
-	if (!(goodbye = (func_goodbye_t)dlsym(*handle, "ias_goodbye")))
+	if (!(goodbye = (func_goodbye_t)dlsym(*handle, "ias_goodbye"))) {
+		printf("failed to load ias_goodbye()\n");
 		goto Exit;
+	}
+
+	hidden = (func_hidden_t)dlsym(*handle, "ias_hidden");
 
 	ret_val = 0;
 
@@ -67,6 +76,13 @@ static int test(void)
 	if (goodbye("world")) {
 		printf("Error: goodbye()\n");
 		return -1;
+	}
+
+	if (hidden) {
+		printf("Error: ias_hidden() should not be exported\n");
+		return -1;
+	} else {
+		printf("ias_hidden() is not exported\n");
 	}
 
 	if (unload_ias(handle)) {
